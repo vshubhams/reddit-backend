@@ -18,7 +18,7 @@ const port = process.env.PORT || 3001
 app.listen(port, async function () {
     try {
         await connect();
-        console.log(`Listen to port ${post}`);
+        console.log(`Listen to port ${port}`);
     }
     catch (error) {
         console.log("error",error);
