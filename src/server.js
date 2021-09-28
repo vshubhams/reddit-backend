@@ -4,13 +4,15 @@ const app = express();
 const connect = require("./config/db");
 app.use(express.json());
 
+const postController = require("./controllers/post.controller");
 const { register, login } = require("./controllers/auth.controller");
 
 const upload = require("./middleware/file-upload");
 
 
-app.post("/register", upload.single("profile_url"),register);
-app.post("/login",login)
+app.post("/register", upload.single("profile_url"), register);
+app.post("/login", login);
+app.use("/posts", postController);
 
 const port = process.env.PORT
 app.listen(port, async function () {
