@@ -14,7 +14,7 @@ app.post("/register", upload.single("profile_url"), register);
 app.post("/login", login);
 app.use("/posts", postController);
 
-const port = process.env.PORT
+const port = process.env.PORT || 3001
 app.listen(port, async function () {
     try {
         await connect();
