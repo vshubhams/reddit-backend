@@ -1,10 +1,18 @@
 const express = require('express');
+require("dotenv").config();
 const app = express();
 const connect = require("./config/db");
 app.use(express.json());
 
+const { register, login } = require("./controllers/auth.controller");
 
-const port = process.env.PORT || 3001
+const upload = require("./middleware/file-upload");
+
+
+app.post("/register", upload.single("profile_url"),register);
+app.post("/login",login)
+
+const port = process.env.PORT
 app.listen(port, async function () {
     try {
         await connect();
