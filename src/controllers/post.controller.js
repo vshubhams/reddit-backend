@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require("mongoose")
 
 const router = express.Router();
 const cloudinary = require("../utils/cloudinary");
@@ -23,8 +24,10 @@ router.get("", async function (req, res) {
     const posts = await Post.find().populate("userId").lean().exec();
     res.status(200).json({ posts });
 })
+
+// getting all post of a user by userId
 router.get("/:id", async function (req, res) {
-    const post = await Post.findById(req.params.id)
+    const post = await Post.find({userId:req.params.id});
     res.status(200).json({ post });
 })
 
