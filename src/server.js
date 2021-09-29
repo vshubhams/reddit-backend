@@ -7,6 +7,7 @@ app.use(express.json());
 const postController = require("./controllers/post.controller");
 const userController = require("./controllers/user.controller");
 const commentController = require("./controllers/comment.controller");
+const voteController = require("./controllers/vote.controller");
 const { register, login } = require("./controllers/auth.controller");
 
 const upload = require("./middleware/file-upload");
@@ -17,6 +18,7 @@ app.post("/login", login);
 app.use("/users", userController);
 app.use("/posts", postController);
 app.use("/comments", commentController);
+app.use("/votes", voteController);
 
 
 const port = process.env.PORT || 3001
