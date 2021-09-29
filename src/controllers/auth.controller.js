@@ -10,9 +10,12 @@ const register = async (req, res) => {
 
     let user;
     try {
+        user = await User.findOne({ name: req.body.name }).lean().exec();
+        if (user) return res.status(400).send({ status: "failed", message: "Username is already exists. Try another" });
+
         user = await User.findOne({ email: req.body.email }).lean().exec();
 
-        if (user) return res.status(400).send({ status: "failed", message: "Please try with a different email and password" });
+        if (user) return res.status(400).send({ status: "failed", message: "Please try with a different email" });
 
         const  result = await cloudinary.uploader.upload(req.file.path);
         // console.log('result:', result)
@@ -40,11 +43,11 @@ const login = async function (req, res) {
 
     try {
         let user = await User.findOne({ email: req.body.email }).exec();
-        if (!user) return res.status(400).send({ status: "failed", message: "Please try with a different email and password" });
+        if (!user) return res.status(400).send({ status: "failed", message: "Please try with a different email or password" });
 
         const match = await user.checkPassword(req.body.password);
 
-        if(!match) return res.status(400).send({ status: "failed", message: "Please try with diffenrent email and password" });
+        if(!match) return res.status(400).send({ status: "failed", message: "Please try with diffenrent email or password" });
 
         const token = newToken(user);
         return res.status(201).json({ token: token });
