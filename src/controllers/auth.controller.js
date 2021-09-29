@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
-const cloudinary = require("../utils/cloudinary")
+const cloudinary = require("../utils/cloudinary");
 
 const newToken = (user) => {
     return jwt.sign({user:user}, process.env.JWT_SECRET_KEY);
