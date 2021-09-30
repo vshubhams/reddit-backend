@@ -14,8 +14,9 @@ router.get("", async function (req, res) {
 });
 
 router.get("/:id", async function (req, res) {
-    const comment = await Comment.find({postId:req.params.id});
-    res.status(200).json({ comment });
+    const comment = await Comment.find({ postId: req.params.id });
+    const count = await Comment.find({ postId: req.params.id }).count();
+    res.status(200).json({ comment,count });
 });
 
 module.exports = router;
