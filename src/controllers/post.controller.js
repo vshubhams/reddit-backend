@@ -29,8 +29,9 @@ router.get("/user/:id", async function (req, res) {
     const post = await Post.find({userId:req.params.id});
     res.status(200).json({ post });
 })
+// getting post postId
 router.get("/:id", async function (req, res) {
-    const post = await Post.findById(req.params.id)
+    const post = await Post.findById(req.params.id).populate("userId").lean().exec();
     res.status(200).json({ post });
 })
 
