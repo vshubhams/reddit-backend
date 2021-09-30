@@ -36,6 +36,12 @@ const register = async (req, res) => {
 
         const token = newToken(user);
 
+        user = {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            profile_url: user.profile_url,
+        }
         res.status(201).json({ user, token });
     }
     catch (err) {
@@ -55,7 +61,13 @@ const login = async function (req, res) {
         if(!match) return res.status(400).send({ status: "failed", message: "Please try with diffenrent email or password" });
 
         const token = newToken(user);
-        return res.status(201).json({ token: token });
+        user = {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            profile_url: user.profile_url,
+        }
+        return res.status(201).json({ user,token });
     }
     catch {
         return res.status(500).send({status: "failed",message: "Please try again later"});
