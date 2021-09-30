@@ -14,7 +14,7 @@ router.get("", async function (req, res) {
 });
 
 router.get("/:id", async function (req, res) {
-    const comment = await Comment.find({ postId: req.params.id });
+    const comment = await Comment.find({ postId: req.params.id }).populate("userId").lean().exec();
     const count = await Comment.find({ postId: req.params.id }).count();
     res.status(200).json({ comment,count });
 });
