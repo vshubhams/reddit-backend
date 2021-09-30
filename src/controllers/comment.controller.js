@@ -8,4 +8,14 @@ router.post("",authenticate, async function (req, res) {
     res.status(201).json({ comment });
 });
 
+router.get("", async function (req, res) {
+    const comment = await Comment.find();
+    res.status(200).json({ comment });
+});
+
+router.get("/:id", async function (req, res) {
+    const comment = await Comment.find({postId:req.params.id});
+    res.status(200).json({ comment });
+});
+
 module.exports = router;
