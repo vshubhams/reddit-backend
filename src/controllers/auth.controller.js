@@ -7,26 +7,31 @@ const newToken = (user) => {
 }
 
 const register = async (req, res) => {
-
+    
     let user;
     try {
         user = await User.findOne({ name: req.body.name }).lean().exec();
         if (user) return res.status(400).send({ status: "failed", message: "Username is already exists. Try another" });
-
+        
         user = await User.findOne({ email: req.body.email }).lean().exec();
-
+        
         if (user) return res.status(400).send({ status: "failed", message: "Please try with a different email" });
-
-        const  result = await cloudinary.uploader.upload(req.file.path);
-        // console.log('result:', result)
+        
+        let result={};
+        try {
+            result = await cloudinary.uploader.upload(req.file.path);
+        }
+        catch (err) {
+            // console.log(err);
+        }
 
         user = await User.create({
             name: req.body.name,
             email: req.body.email,
             password:req.body.password,
-            profile_url:result.secure_url
+            profile_url:result.secure_url || ""
         });
-
+        
         if (!user) return res.status(500).send({ status: "failed", message: "Please try again later" });
 
         const token = newToken(user);
@@ -35,7 +40,7 @@ const register = async (req, res) => {
     }
     catch (err) {
         // console.log(err);
-        return res.status(500).send({ status: "failed", message: "Please try again later" })
+        return res.status(500).send({ status: "Failed", message: "Please try again later" })
     }
 }
 
