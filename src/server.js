@@ -8,6 +8,7 @@ const postController = require("./controllers/post.controller");
 const userController = require("./controllers/user.controller");
 const commentController = require("./controllers/comment.controller");
 const voteController = require("./controllers/vote.controller");
+const communityController = require("./controllers/community.controller");
 const { register, login } = require("./controllers/auth.controller");
 
 const upload = require("./middleware/file-upload");
@@ -19,6 +20,7 @@ app.use("/users", userController);
 app.use("/posts", postController);
 app.use("/comments", commentController);
 app.use("/votes", voteController);
+app.use("/community", communityController);
 
 
 const port = process.env.PORT || 3001
