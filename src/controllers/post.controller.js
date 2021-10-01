@@ -20,7 +20,7 @@ router.post("", authenticate, upload.single("imageUrl"), async function (req, re
 });
 
 router.get("", async function (req, res) {
-    const posts = await Post.find().populate("userId").lean().exec();
+    const posts = await Post.find().populate("userId").sort({_id:-1}).lean().exec();
     res.status(200).json({ posts });
 })
 
@@ -29,7 +29,7 @@ router.get("/user/:id", async function (req, res) {
     const post = await Post.find({userId:req.params.id});
     res.status(200).json({ post });
 })
-// getting post postId
+// getting post by postId
 router.get("/:id", async function (req, res) {
     const post = await Post.findById(req.params.id).populate("userId").lean().exec();
     res.status(200).json({ post });
