@@ -9,4 +9,9 @@ router.post("", authenticate, async function (req, res) {
     res.status(201).json({ community });
 });
 
+router.get("", async function (req, res) {
+    const communities = await Community.find().lean().exec();
+    res.status(200).json({ communities });
+})
+
 module.exports = router;
