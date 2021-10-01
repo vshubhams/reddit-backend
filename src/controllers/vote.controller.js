@@ -25,7 +25,7 @@ router.get("", async function (req, res) {
     res.status(200).json({ votes });
 });
 
-router.get("/:parentId/count", async function (req, res) {
+router.get("/count/:parentId", async function (req, res) {
     const votes = await Vote.find().lean().exec();
     let count = 0;
     votes.forEach((vote) => {
