@@ -10,7 +10,7 @@ router.post("", authenticate, async function (req, res) {
 });
 
 router.get("", async function (req, res) {
-    const communities = await Community.find().lean().exec();
+    const communities = await Community.find().populate("userId").lean().exec();
     res.status(200).json({ communities });
 })
 
