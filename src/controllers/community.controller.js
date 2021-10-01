@@ -22,7 +22,7 @@ router.get("/:id", async function (req, res) {
 
 // getting all community of a user by userId
 router.get("/user/:id", async function (req, res) {
-    const communities = await Community.find({userId:req.params.id});
+    const communities = await Community.find({userId:req.params.id}).populate("userId").lean().exec();
     res.status(200).json({ communities });
 })
 

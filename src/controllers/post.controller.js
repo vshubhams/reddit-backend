@@ -26,7 +26,7 @@ router.get("", async function (req, res) {
 
 // getting all post of a user by userId
 router.get("/user/:id", async function (req, res) {
-    const post = await Post.find({userId:req.params.id});
+    const post = await Post.find({userId:req.params.id}).populate("userId").lean().exec();
     res.status(200).json({ post });
 })
 // getting post by postId
