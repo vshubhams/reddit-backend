@@ -21,7 +21,7 @@ router.post("", authenticate, upload.single("imageUrl"), async function (req, re
 });
 
 router.get("", async function (req, res) {
-    const posts = await Post.find().populate("userId").sort({_id:-1}).lean().exec();
+    const posts = await Post.find().populate("userId").populate("communityId").sort({_id:-1}).lean().exec();
     res.status(200).json({ posts });
 })
 
@@ -38,7 +38,7 @@ router.get("/community/:id", async function (req, res) {
 })
 // getting post by postId
 router.get("/:id", async function (req, res) {
-    const post = await Post.findById(req.params.id).populate("userId").lean().exec();
+    const post = await Post.findById(req.params.id).populate("userId").populate("communityId").lean().exec();
     res.status(200).json({ post });
 })
 

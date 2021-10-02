@@ -10,8 +10,8 @@ const postSchema = new mongoose.Schema({
     },
     communityId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "user",
-        required:true 
+        ref: "community",
+        required:false 
     }
 }, {
     timestamps: true,

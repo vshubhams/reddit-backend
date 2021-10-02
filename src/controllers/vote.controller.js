@@ -33,7 +33,20 @@ router.get("/count/:parentId", async function (req, res) {
             count += vote.value;
         }
     });
-    return res.status(201).json({count})
+    return res.status(201).json({ count })
+});
+// to check if a user is upvoted or down voted or not by userId and parent id
+router.get("/check/:parentId/:userId", async function (req, res) {
+    const vote = await Vote.find({parentId:req.params.parentId,userId:req.params.userId}).lean().exec();
+    return res.status(201).json({ vote });
+    
+})
+
+//get all votes of a parent by parentID
+
+router.get("/post/:parentId", async function (req, res) {
+    const vote = await Vote.find({ parentId: req.params.parentId }).populate("userId").lean().exec();
+    return res.status(201).json({ vote });
 })
 
 module.exports = router;
