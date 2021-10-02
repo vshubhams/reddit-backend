@@ -21,7 +21,7 @@ router.post("", authenticate, upload.single("imageUrl"), async function (req, re
 });
 
 router.get("", async function (req, res) {
-    const posts = await Post.find().populate("userId").sort({_id:-1}).lean().exec();
+    const posts = await Post.find().populate("userId").populate("communityId").sort({_id:-1}).lean().exec();
     res.status(200).json({ posts });
 })
 
