@@ -1,7 +1,9 @@
 const express = require("express");
 require("dotenv").config();
 const app = express();
+const cors = require("cors");
 const connect = require("./config/db");
+app.use(cors());
 app.use(express.json());
 const Msg = require("./models/msg.model");
 
