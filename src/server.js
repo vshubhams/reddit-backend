@@ -6,6 +6,7 @@ const connect = require("./config/db");
 app.use(cors());
 app.use(express.json());
 const Msg = require("./models/msg.model");
+const Chatroom = require("./models/chatroom.model");
 
 const postController = require("./controllers/post.controller");
 const userController = require("./controllers/user.controller");
@@ -42,18 +43,7 @@ const io = require("socket.io")(server);
 
 let user = [];
 const addUser = (userId, socketId) => {
-  // !user.some((user) => user.userId === userId) && user.push({ userId, socketId });
-
-  let flag = false;
-  for (var i = 0; i < user.length; i++) {
-    if (user[i].userId === userId) {
-      flag = true;
-    }
-  }
-
-  if (!flag) {
-    user.push({ userId, socketId });
-  }
+  !user.some((user) => user.userId === userId) && user.push({ userId, socketId });
 };
 
 const removeAddedUser = (socketId) => {
@@ -77,10 +67,11 @@ io.on("connection", (socket) => {
   });
 
   //send Message and get message
-  socket.on("sendMessage", ({ senderId, receiverId, text }) => {
+  socket.on("sendMessage", ({ senderId, receiverId, text, currentChatroomId }) => {
     const userParticular = getUser(receiverId);
-    console.log(userParticular);
-    io.to(userParticular?.socketId).emit("getMessage", {
+    console.log(userParticular, "parit");
+    console.log(senderId, receiverId, text, currentChatroomId, "msg");
+    io.emit("getMessage", {
       senderId,
       text,
     });
