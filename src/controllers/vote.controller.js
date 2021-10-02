@@ -33,7 +33,13 @@ router.get("/count/:parentId", async function (req, res) {
             count += vote.value;
         }
     });
-    return res.status(201).json({count})
+    return res.status(201).json({ count })
+});
+
+router.get("/check/:parentId/:userId", async function (req, res) {
+    const vote = await Vote.find({parentId:req.params.parentId,userId:req.params.userId}).lean().exec();
+    return res.status(201).json({ vote });
+    
 })
 
 module.exports = router;
