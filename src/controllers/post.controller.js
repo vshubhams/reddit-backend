@@ -38,7 +38,7 @@ router.get("/community/:id", async function (req, res) {
 })
 // getting post by postId
 router.get("/:id", async function (req, res) {
-    const post = await Post.findById(req.params.id).populate("userId").lean().exec();
+    const post = await Post.findById(req.params.id).populate("userId").populate("communityId").lean().exec();
     res.status(200).json({ post });
 })
 
