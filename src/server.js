@@ -3,10 +3,6 @@ require("dotenv").config();
 const app = express();
 const cors = require("cors");
 const connect = require("./config/db");
-<<<<<<< HEAD
-=======
-const cors = require("cors");
->>>>>>> ravi
 app.use(cors());
 app.use(express.json());
 const Msg = require("./models/msg.model");
