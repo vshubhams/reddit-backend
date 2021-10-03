@@ -15,7 +15,7 @@ router.get("", async function (req, res) {
 
 // get all comments for a specific post
 router.get("/:id", async function (req, res) {
-    const comment = await Comment.find({ postId: req.params.id }).populate("userId").lean().exec();
+    const comment = await Comment.find({ postId: req.params.id }).populate("userId").sort({_id:-1}).lean().exec();
     const count = await Comment.find({ postId: req.params.id }).count();
     res.status(200).json({ comment,count });
 });
